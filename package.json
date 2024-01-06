@@ -1,0 +1,26 @@
+{
+  "name": "itools-api",
+  "version": "1.0.0",
+  "description": "The iTools official API!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliaseverino/itools-api.git"
+  },
+  "keywords": [
+    "itools",
+    "itools-api",
+    "api",
+    "itools_api",
+    "itools_api"
+  ],
+  "author": "Elías Severino",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eliaseverino/itools-api/issues"
+  },
+  "homepage": "https://github.com/eliaseverino/itools-api#readme"
+}
