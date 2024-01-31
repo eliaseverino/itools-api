@@ -10,10 +10,15 @@ const blur = require('./controllers/blur').full;
 
 app.post('/:level', upload.any(), async (req, res) => {
     // Get the file.
-    const I = req.files[0];
+    const I = req.files ? req.files[0] : false;
     const L = parseInt(req.params.level);
 
     try {
+        // Verify the image.
+        if (!I) {
+            res.status(400).json({ success: false, message: 'Image not found.' });
+            return;
+        }
 
         // Check the blur level.
         if (!L || L < 1 || L > 100) {
@@ -37,8 +42,8 @@ app.post('/:level', upload.any(), async (req, res) => {
         res.end(blurImageBuffer);
 
         // On finish delete the files.
-        del(blurImagePath);
-    } finally { del(I.path); res.end();}
+        del([blurImagePath, I.path]);
+    } finally { res.end(); }
 
 });
 
