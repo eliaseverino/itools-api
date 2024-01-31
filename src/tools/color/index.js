@@ -17,7 +17,7 @@ app.post('/vibrant', upload.any(), async (req, res) => {
         res.json({ success: true, vibrant: v });
 
         // On finish delete the file.
-    } finally { del(I.path); }
+    } finally { del(I.path); res.end(); }
 });
 
 // Get the muted color from an image.
@@ -29,7 +29,7 @@ app.post('/muted', upload.any(), async (req, res) => {
         res.json({ success: true, muted: m });
 
         // On finish delete the file.
-    } finally { del(I.path); }
+    } finally { del(I.path); res.end(); }
 });
 
 // Get the full color palette from an image.
@@ -41,7 +41,7 @@ app.post('/palette', upload.any(), async (req, res) => {
         res.json({ success: true, palette: p });
 
         // On finish delete the file.
-    } finally { del(I.path); }
+    } finally { del(I.path); res.end(); }
 });
 
 module.exports = app;

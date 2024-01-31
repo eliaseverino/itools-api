@@ -2,8 +2,10 @@ const clean = {};
 
 const fs = require('fs');
 
-clean.del = (path, folder = false) => {
-    fs.unlink(path, e => { if (e) console.error(e); });
+// This function remove the 't' files.
+clean.del = (t) => {
+        if (typeof(t) !== "string") t.forEach(x => { clean.del(x); });
+    else fs.unlink(t, e => { if (e) console.error(e); });
 };
 
 
