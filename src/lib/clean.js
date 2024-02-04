@@ -3,9 +3,10 @@ const clean = {};
 const fs = require('fs');
 
 // This function remove the 't' files.
-clean.del = (t) => {
-        if (typeof(t) !== "string") t.forEach(x => { clean.del(x); });
-    else fs.unlink(t, e => { if (e) console.error(e); });
+clean.del = async (t) => {
+    if (t)
+        if (typeof (t) !== "string") await t.forEach(async x => { if (await fs.existsSync(x)) clean.del(x); });
+        else if (await fs.existsSync(t)) fs.unlink(t, err => { if (err) console.error(err); });
 };
 
 

@@ -25,7 +25,7 @@ const fileFilter = (req, file, cb) => {
 const config = {
     storage: storage,
     fileFilter: fileFilter,
-    limits: { fileSize: 1024 * 1024 * 100, }, // Limit the image size to 100MB (WTF).
+    limits: { fileSize: 1024 * 1024 * 20, }, // Limit the image size to 20MB :).
 };
 
 module.exports = multer(config);
