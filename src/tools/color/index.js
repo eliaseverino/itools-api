@@ -11,7 +11,8 @@ app.get('/', (req, res) => { res.json({ success: true }); });
 // Get the dominant color from an image.
 app.post('/vibrant', upload.any(), async (req, res) => {
     // Get the file.
-    const I = req.files[0];
+    const I = req.files ? req.files[0] : false;
+
     try {
         // Verify the image.
         if (!I) {
@@ -30,7 +31,8 @@ app.post('/vibrant', upload.any(), async (req, res) => {
 // Get the muted color from an image.
 app.post('/muted', upload.any(), async (req, res) => {
     // Get the file.
-    const I = req.files[0];
+    const I = req.files ? req.files[0] : false;
+
     try {
         // Verify the image.
         if (!I) {
@@ -49,7 +51,8 @@ app.post('/muted', upload.any(), async (req, res) => {
 // Get the full color palette from an image.
 app.post('/palette', upload.any(), async (req, res) => {
     // Get the file.
-    const I = req.files[0];
+    const I = req.files ? req.files[0] : false;
+
     try {
         // Verify the image.
         if (!I) {
