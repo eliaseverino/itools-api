@@ -2,8 +2,8 @@ const { Router } = require('express');
 const app = Router();
 
 const upload = require('../../lib/multer'); // Our own Multer middleware for the file upload.
-const vibrant = require('./controllers/vibrant'); // Vibrant controller.
-const palette = require('./controllers/palette'); // Palette controller.
+const { getMuted, getVibrant } = require('./controllers/vibrant'); // Vibrant controller.
+const { getPalette } = require('./controllers/palette'); // Palette controller.
 const { del } = require('../../lib/clean'); // File clean controller.
 
 app.get('/', (req, res) => { res.json({ success: true }); });
@@ -20,7 +20,10 @@ app.post('/vibrant', upload.any(), async (req, res) => {
             return;
         }
 
-        let v = await vibrant.getVibrant(I.path);
+        // Gettign the vibrant colors.
+        let v = await getVibrant(I.path);
+
+        // Return the results.
         res.json({ success: true, vibrant: v });
 
         // On finish delete the file.
@@ -40,7 +43,10 @@ app.post('/muted', upload.any(), async (req, res) => {
             return;
         }
 
-        let m = await vibrant.getMuted(I.path);
+        // Gettign the muted colors.
+        let m = await getMuted(I.path);
+
+        // Return the results.
         res.json({ success: true, muted: m });
 
         // On finish delete the file.
@@ -60,7 +66,10 @@ app.post('/palette', upload.any(), async (req, res) => {
             return;
         }
 
-        let p = await palette.getPalette(I.path);
+        // Gettign the full pallete.
+        let p = await getPalette(I.path);
+
+        // Return the results.
         res.json({ success: true, palette: p });
 
         // On finish delete the file.

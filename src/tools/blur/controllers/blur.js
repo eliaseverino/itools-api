@@ -1,11 +1,11 @@
-const blur = {};
+const controller = {};
 const sharp = require('sharp');
-const helpers = require('../../../lib/helpers');
+const { tempNameGenerator } = require('../../../lib/helpers');
 
-blur.full = async (i, l) => {
+controller.blur = async (i, l) => {
 
     // Generate new name with the 'temp' word to know that is a temporal file.
-    const t = await helpers.tempNameGenerator(i);
+    const t = await tempNameGenerator(i);
 
     try {
         // Apply blur on the image with Sharp.
@@ -19,4 +19,4 @@ blur.full = async (i, l) => {
 
 
 
-module.exports = blur;
+module.exports = controller;
