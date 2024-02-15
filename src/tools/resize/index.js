@@ -67,8 +67,6 @@ app.post('/', upload.any(), async (req, res) => {
         // Read and return the processed image.
         await imageReturn(processedImage, res);
 
-        console.log(processedImage)
-
         // On finish delete the files.
         del([I.path, processedImage]);
     } finally { del(I?.path); res.end(); }
