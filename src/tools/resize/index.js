@@ -7,15 +7,17 @@ const { del } = require('../../lib/clean'); // File clean controller.
 const { imageReturn } = require('../../lib/image');
 const { scale } = require('./controllers/scale');
 const { resize, resizeTypes, resizeTypes_itools } = require('./controllers/resize');
+const { imageFound } = require('../../lib/failureResponses');
 
 app.post('/', upload.any(), async (req, res) => {
+
+    // Verify the image.
+    if (!(await imageFound(req, res))) return;
+
     // Get the file.
     const I = req.files ? req.files[0] : false;
 
     try {
-        // Verify the image.
-        if (!I) { res.status(400).json({ success: false, message: 'Image not found.' }); return; }
-
         // Process image.
         let processedImage;
 

@@ -3,7 +3,8 @@ const app = Router();
 
 const upload = require('../../lib/multer'); // Our own Multer middleware for the file upload.
 const { del } = require('../../lib/clean'); // File clean controller.
-const { imageReturn , getSize} = require('../../lib/image');
+const { imageReturn, getSize } = require('../../lib/image');
+const { imageFound } = require('../../lib/failureResponses');
 
 const { blur } = require('./controllers/blur');
 
@@ -15,13 +16,10 @@ app.post('/:level', upload.any(), async (req, res) => {
     // Get the image size.
     const size = await getSize(I.path);
 
-    try {
-        // Verify the image.
-        if (!I) {
-            res.status(400).json({ success: false, message: 'Image not found.' });
-            return;
-        }
+    // Verify the image.
+    if (!(await imageFound(req, res))) return;
 
+    try {
         // Check the image size.
         if (!size) {
             res.status(400).json({ success: false, message: 'An error occurred while the image was being processed.' });
@@ -33,7 +31,7 @@ app.post('/:level', upload.any(), async (req, res) => {
 
         // Check the blur level.
         if (!L || L <= 0 || L > 100) {
-           res.status(400).json({ success: false, message: 'The blur level isn\'t correct.' });
+            res.status(400).json({ success: false, message: 'The blur level isn\'t correct.' });
             return;
         }
 
@@ -49,20 +47,18 @@ app.post('/:level', upload.any(), async (req, res) => {
 });
 
 app.post('/', upload.any(), async (req, res) => {
+
+    // Verify the image.
+    if (!(await imageFound(req, res))) return;
+
     // Get the file.
     const I = req.files ? req.files[0] : false;
-    const L = Number(req.body?.level);
+    const L = Number(req.body.level);
 
     // Get the image size.
     const size = await getSize(I.path);
 
     try {
-        // Verify the image.
-        if (!I) {
-            res.status(400).json({ success: false, message: 'Image not found.' });
-            return;
-        }
-
         // Check the image size.
         if (!size) {
             res.status(400).json({ success: false, message: 'An error occurred while the image was being processed.' });
@@ -74,7 +70,7 @@ app.post('/', upload.any(), async (req, res) => {
 
         // Check the blur level.
         if (!L || L <= 0 || L > 100) {
-           res.status(400).json({ success: false, message: 'The blur level isn\'t correct.' });
+            res.status(400).json({ success: false, message: 'The blur level isn\'t correct.' });
             return;
         }
 

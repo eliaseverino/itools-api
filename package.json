@@ -25,6 +25,7 @@
   "homepage": "https://github.com/eliaseverino/itools-api#readme",
   "dependencies": {
     "axios": "^1.6.7",
+    "body-parser": "^1.20.2",
     "chroma-js": "^2.4.2",
     "color-convert": "^2.0.1",
     "colorthief": "^2.4.0",
