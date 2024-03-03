@@ -48,6 +48,58 @@ app.post('/', upload.any(), async (req, res) => {
 });
 
 // Get the dominant color from an image.
+app.post('/full', upload.any(), async (req, res) => {
+
+    // Verify the image.
+    if (!(await imageFound(req, res))) return;
+
+    // Get the file.
+    const I = req.files ? req.files[0] : false;
+    const selected = types;
+
+    try {
+        // To save the final return.
+        let result = {};
+
+        // For each mode, we apply the respective function.
+        for (const x of selected) result[x.name] = await x.call(I.path);
+
+        // Return the results.
+        res.json(result);
+
+    } finally {
+        del(I.path); // On finish delete the file.
+        res.end();
+    }
+});
+
+// Get the dominant color from an image.
+app.post('/complete', upload.any(), async (req, res) => {
+
+    // Verify the image.
+    if (!(await imageFound(req, res))) return;
+
+    // Get the file.
+    const I = req.files ? req.files[0] : false;
+    const selected = types;
+
+    try {
+        // To save the final return.
+        let result = {};
+
+        // For each mode, we apply the respective function.
+        for (const x of selected) result[x.name] = await x.call(I.path);
+
+        // Return the results.
+        res.json(result);
+
+    } finally {
+        del(I.path); // On finish delete the file.
+        res.end();
+    }
+});
+
+// Get the dominant color from an image.
 app.post('/vibrant', upload.any(), async (req, res) => {
 
     // Verify the image.
@@ -61,7 +113,7 @@ app.post('/vibrant', upload.any(), async (req, res) => {
         let v = await getVibrant(I.path);
 
         // Return the results.
-        res.json({ success: true, vibrant: v });
+        res.json({ vibrant: v });
 
     } finally {
         del(I.path); // On finish delete the file.
@@ -83,7 +135,7 @@ app.post('/muted', upload.any(), async (req, res) => {
         let m = await getMuted(I.path);
 
         // Return the results.
-        res.json({ success: true, muted: m });
+        res.json({ muted: m });
 
     } finally {
         del(I.path); // On finish delete the file.
@@ -105,7 +157,7 @@ app.post('/palette', upload.any(), async (req, res) => {
         let p = await getPalette(I.path);
 
         // Return the results.
-        res.json({ success: true, palette: p });
+        res.json({ palette: p });
 
     } finally {
         del(I.path); // On finish delete the file.
